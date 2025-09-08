@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAGMAMCH NABH Tool - Official Chapters</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .header .subtitle {
+            color: #4a90e2;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .nabh-info {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .btn-primary { background: #4a90e2; }
+        .btn-success { background: #27ae60; }
+        .btn-info { background: #17a2b8; }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .committee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .committee-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #4a90e2;
+        }
+        
+        .committee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .committee-header {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .committee-header h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        
+        .chapter-code {
+            font-size: 0.9em;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        
+        .status {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .toggle-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+        
+        .committee-content {
+            display: none;
+            padding: 25px;
+        }
+        
+        .committee-content.active {
+            display: block;
+        }
+        
+        .committee-header.active .toggle-icon {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .document-upload {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 2px dashed #dee2e6;
+        }
+        
+        .upload-area {
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            background: #e9ecef;
+            border-color: #4a90e2;
+        }
+        
+        .upload-btn {
+            background: #4a90e2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .file-action-btn {
+            background: none;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .download-btn { color: #27ae60; }
+        .delete-btn { color: #e74c3c; }
+        
+        .admin-panel {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .admin-panel.active { display: block; }
+        
+        .save-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .save-status.show { transform: translateX(0); }
+        .save-status.success { background: #27ae60; }
+        .save-status.error { background: #e74c3c; }
+        
+        .progress-indicator {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            background: #e1e8ed;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .committee-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .action-buttons { flex-direction: column; }
+            .header h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>JAGMAMCH NABH Tool</h1>
+            <p class="subtitle">National Accreditation Board for Hospitals & Healthcare Providers</p>
+            <p>Official NABH Ayurveda Hospital Accreditation Documentation System</p>
+        </div>
+
+        <!-- NABH Standards Information -->
+        <div class="nabh-info">
+            <h2>📋 NABH Accreditation Standards for Ayurveda Hospitals (2nd Edition)</h2>
+            <p><strong>Standards:</strong> 98 standards with 590 objective elements across 10 chapters</p>
+            <p><strong>Minimum Requirement:</strong> 10 beds for accreditation eligibility</p>
+            <p><strong>Implementation Period:</strong> Minimum 3 months before assessment</p>
+            <p><strong>Certificate Validity:</strong> 4 years with surveillance at 15-18 months</p>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <h2>📋 Instructions for Using the NABH Tool</h2>
+            <ul>
+                <li><strong>Chapter Structure:</strong> Each section represents an official NABH chapter with specific standards</li>
+                <li><strong>Documentation:</strong> Fill all required fields as per NABH requirements</li>
+                <li><strong>Document Upload:</strong> Upload supporting documents, policies, and evidence for each chapter</li>
+                <li><strong>Progress Tracking:</strong> Monitor completion status for all 10 chapters</li>
+                <li><strong>Assessment Ready:</strong> Ensure 100% completion before NABH assessment</li>
+            </ul>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="saveAllData()">💾 Save All Progress</button>
+                <button class="btn btn-success" onclick="exportToWord()">📄 Export Documentation</button>
+                <button class="btn btn-info" onclick="exportToPDF()">📑 Export as PDF</button>
+                <button class="btn btn-primary" onclick="generateReport()">📊 NABH Compliance Report</button>
+                <button class="btn btn-info" onclick="toggleAdminPanel()">🔧 Admin Panel</button>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel" id="adminPanel">
+            <h2>📋 Chapter-wise Document Management</h2>
+            <button class="btn btn-primary" onclick="toggleAdminPanel()">✕ Close</button>
+            <div style="margin-top: 20px;">
+                <h3>NABH Compliance Status</h3>
+                <p>Total Chapters: <span id="totalChapters">10</span></p>
+                <p>Completed Chapters: <span id="completedChapters">0</span></p>
+                <p>Documents Uploaded: <span id="totalDocs">0</span></p>
+                <p>Assessment Readiness: <span id="readiness">0%</span></p>
+            </div>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <h3>NABH Accreditation Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">0% Complete (0 of 10 chapters)</p>
+        </div>
+
+        <!-- NABH Chapters Grid -->
+        <div class="committee-grid">
+            
+            <!-- Chapter 1: Access, Assessment and Continuity of Care (AAC) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">AAC</span>
+                    <h3>Access, Assessment and Continuity of Care</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="aac">
+                        <div class="form-group">
+                            <label>Patient Registration Process</label>
+                            <textarea name="registration_process" placeholder="Describe patient registration and admission procedures"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Assessment Guidelines</label>
+                                <select name="assessment_guidelines">
+                                    <option value="">Select status</option>
+                                    <option value="implemented">Fully Implemented</option>
+                                    <option value="partial">Partially Implemented</option>
+                                    <option value="planning">Under Planning</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Referral System</label>
+                                <input type="text" name="referral_system" placeholder="Referral protocols in place">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Continuity of Care Protocols</label>
+                            <textarea name="continuity_care" placeholder="Procedures for ensuring continuity of patient care"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Emergency Care Procedures</label>
+                            <textarea name="emergency_care" placeholder="Emergency and urgent care protocols"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload AAC Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('aac')">
+                                <input type="file" id="file-aac" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'aac')">
+                                <p>📁 Upload AAC policies, procedures, and forms</p>
+                                <p style="font-size: 0.9em; color: #666;">PDF, DOC, DOCX (Max 10MB each)</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-aac"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 2: Care of Patient (COP) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">COP</span>
+                    <h3>Care of Patient</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="cop">
+                        <div class="form-group">
+                            <label>Treatment Planning Process</label>
+                            <textarea name="treatment_planning" placeholder="Ayurveda treatment planning and documentation process"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Clinical Protocols</label>
+                                <select name="clinical_protocols">
+                                    <option value="">Select implementation status</option>
+                                    <option value="standard">Standard Protocols</option>
+                                    <option value="ayurveda">Ayurveda-specific Protocols</option>
+                                    <option value="integrated">Integrated Protocols</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Panchakarma Procedures</label>
+                                <input type="number" name="panchakarma_count" placeholder="Number of Panchakarma procedures">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Patient Care Standards</label>
+                            <textarea name="care_standards" placeholder="Standards for Ayurveda patient care and nursing"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Discharge Planning</label>
+                            <textarea name="discharge_planning" placeholder="Patient discharge and follow-up protocols"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload COP Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('cop')">
+                                <input type="file" id="file-cop" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'cop')">
+                                <p>📁 Upload patient care protocols and procedures</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-cop"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 3: Management of Medication (MOM) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">MOM</span>
+                    <h3>Management of Medication</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="mom">
+                        <div class="form-group">
+                            <label>Ayurveda Medicine Management</label>
+                            <textarea name="ayurveda_medicines" placeholder="Procurement, storage, and quality control of Ayurveda medicines"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Pharmacy License</label>
+                                <input type="text" name="pharmacy_license" placeholder="Pharmacy license number and validity">
+                            </div>
+                            <div class="form-group">
+                                <label>Drug Storage Conditions</label>
+                                <select name="storage_conditions">
+                                    <option value="">Select compliance</option>
+                                    <option value="compliant">Fully Compliant</option>
+                                    <option value="partial">Needs Improvement</option>
+                                    <option value="non_compliant">Non-Compliant</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Medication Safety Protocols</label>
+                            <textarea name="safety_protocols" placeholder="Drug safety, error prevention, and adverse reaction management"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Herbal Medicine Preparation</label>
+                            <textarea name="herbal_preparation" placeholder="In-house herbal medicine preparation and quality assurance"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload MOM Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('mom')">
+                                <input type="file" id="file-mom" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'mom')">
+                                <p>📁 Upload medication management policies</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-mom"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 4: Patient Right and Education (PRE) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">PRE</span>
+                    <h3>Patient Right and Education</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="pre">
+                        <div class="form-group">
+                            <label>Patient Rights Charter</label>
+                            <textarea name="rights_charter" placeholder="Patient rights and responsibilities charter"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Informed Consent Process</label>
+                                <select name="consent_process">
+                                    <option value="">Select status</option>
+                                    <option value="documented">Fully Documented</option>
+                                    <option value="verbal">Verbal Only</option>
+                                    <option value="both">Both Written & Verbal</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Patient Education Materials</label>
+                                <input type="number" name="education_materials" placeholder="Number of education materials">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Ayurveda Lifestyle Education</label>
+                            <textarea name="lifestyle_education" placeholder="Patient education on Ayurveda lifestyle and preventive care"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Complaint Management System</label>
+                            <textarea name="complaint_management" placeholder="Patient complaint handling and resolution process"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload PRE Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('pre')">
+                                <input type="file" id="file-pre" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'pre')">
+                                <p>📁 Upload patient rights and education materials</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-pre"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 5: Hospital Infection Control (HIC) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">HIC</span>
+                    <h3>Hospital Infection Control</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="hic">
+                        <div class="form-group">
+                            <label>Infection Control Officer</label>
+                            <input type="text" name="ico" placeholder="ICO name and qualification">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Hand Hygiene Compliance</label>
+                                <input type="number" name="hand_hygiene" placeholder="Compliance percentage">
+                            </div>
+                            <div class="form-group">
+                                <label>HAI Surveillance</label>
+                                <select name="hai_surveillance">
+                                    <option value="">Select system</option>
+                                    <option value="active">Active Surveillance</option>
+                                    <option value="passive">Passive Surveillance</option>
+                                    <option value="targeted">Targeted Surveillance</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Standard Precautions</label>
+                            <textarea name="standard_precautions" placeholder="Implementation of standard precautions across departments"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Sterilization Procedures</label>
+                            <textarea name="sterilization" placeholder="Sterilization of Ayurveda instruments and equipment"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload HIC Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('hic')">
+                                <input type="file" id="file-hic" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'hic')">
+                                <p>📁 Upload infection control policies and procedures</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-hic"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 6: Continuous Quality Improvement (CQI) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">CQI</span>
+                    <h3>Continuous Quality Improvement</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="cqi">
+                        <div class="form-group">
+                            <label>Quality Manager</label>
+                            <input type="text" name="quality_manager" placeholder="Quality manager name and qualification">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Quality Indicators</label>
+                                <input type="number" name="quality_indicators" placeholder="Number of quality indicators monitored">
+                            </div>
+                            <div class="form-group">
+                                <label>Audit Frequency</label>
+                                <select name="audit_frequency">
+                                    <option value="">Select frequency</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="quarterly">Quarterly</option>
+                                    <option value="annual">Annual</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Quality Improvement Projects</label>
+                            <textarea name="improvement_projects" placeholder="Ongoing quality improvement initiatives"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Patient Satisfaction Monitoring</label>
+                            <textarea name="patient_satisfaction" placeholder="Patient satisfaction measurement and improvement plans"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload CQI Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('cqi')">
+                                <input type="file" id="file-cqi" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'cqi')">
+                                <p>📁 Upload quality improvement policies and reports</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-cqi"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 7: Responsibility of Management (ROM) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">ROM</span>
+                    <h3>Responsibility of Management</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="rom">
+                        <div class="form-group">
+                            <label>Hospital Administrator</label>
+                            <input type="text" name="administrator" placeholder="Hospital administrator name and qualification">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Management Structure</label>
+                                <select name="management_structure">
+                                    <option value="">Select structure</option>
+                                    <option value="hierarchical">Hierarchical</option>
+                                    <option value="flat">Flat Organization</option>
+                                    <option value="matrix">Matrix Structure</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Governance Committee Meetings</label>
+                                <input type="number" name="committee_meetings" placeholder="Annual meetings conducted">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Policy Framework</label>
+                            <textarea name="policy_framework" placeholder="Hospital policy framework and management commitment"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Resource Allocation</label>
+                            <textarea name="resource_allocation" placeholder="Resource allocation for quality improvement and patient safety"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload ROM Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('rom')">
+                                <input type="file" id="file-rom" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'rom')">
+                                <p>📁 Upload management policies and governance documents</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-rom"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 8: Facility Management and Safety (FMS) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">FMS</span>
+                    <h3>Facility Management and Safety</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="fms">
+                        <div class="form-group">
+                            <label>Facility Manager</label>
+                            <input type="text" name="facility_manager" placeholder="Facility manager name and qualification">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Fire Safety Compliance</label>
+                                <select name="fire_safety">
+                                    <option value="">Select compliance status</option>
+                                    <option value="compliant">Fully Compliant</option>
+                                    <option value="partial">Partially Compliant</option>
+                                    <option value="non_compliant">Non-Compliant</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Biomedical Waste License</label>
+                                <input type="text" name="waste_license" placeholder="BMW license number and validity">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Building Safety Measures</label>
+                            <textarea name="building_safety" placeholder="Building safety systems and emergency preparedness"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Equipment Maintenance</label>
+                            <textarea name="equipment_maintenance" placeholder="Medical and Ayurveda equipment maintenance protocols"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload FMS Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('fms')">
+                                <input type="file" id="file-fms" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'fms')">
+                                <p>📁 Upload facility management and safety documents</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-fms"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 9: Human Resource Management (HRM) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">HRM</span>
+                    <h3>Human Resource Management</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="hrm">
+                        <div class="form-group">
+                            <label>HR Manager</label>
+                            <input type="text" name="hr_manager" placeholder="HR manager name and qualification">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Total Staff Count</label>
+                                <input type="number" name="total_staff" placeholder="Total number of staff">
+                            </div>
+                            <div class="form-group">
+                                <label>Ayurveda Specialists</label>
+                                <input type="number" name="ayurveda_specialists" placeholder="Number of qualified Ayurveda doctors">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Staff Credentialing Process</label>
+                            <textarea name="credentialing" placeholder="Medical staff credentialing and privileging process"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Training and Development</label>
+                            <textarea name="training_development" placeholder="Staff training programs and competency development"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Performance Management</label>
+                            <textarea name="performance_management" placeholder="Staff performance evaluation and improvement processes"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload HRM Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('hrm')">
+                                <input type="file" id="file-hrm" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'hrm')">
+                                <p>📁 Upload HR policies and staff management documents</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-hrm"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Chapter 10: Information Management System (IMS) -->
+            <div class="committee-card">
+                <div class="committee-header" onclick="toggleCommittee(this)">
+                    <span class="chapter-code">IMS</span>
+                    <h3>Information Management System</h3>
+                    <p class="status">Status: Pending</p>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="committee-content">
+                    <form class="committee-form" data-committee="ims">
+                        <div class="form-group">
+                            <label>IT Manager</label>
+                            <input type="text" name="it_manager" placeholder="IT manager name and qualification">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Hospital Management System</label>
+                                <select name="hms_type">
+                                    <option value="">Select system type</option>
+                                    <option value="integrated">Integrated HMS</option>
+                                    <option value="modular">Modular System</option>
+                                    <option value="paper_based">Paper-based</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Data Backup Frequency</label>
+                                <select name="backup_frequency">
+                                    <option value="">Select frequency</option>
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Data Security Measures</label>
+                            <textarea name="data_security" placeholder="Data security, privacy protection, and access control measures"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Record Management System</label>
+                            <textarea name="record_management" placeholder="Medical record management and retrieval system"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>System Integration</label>
+                            <textarea name="system_integration" placeholder="Integration of Ayurveda-specific modules with HMS"></textarea>
+                        </div>
+                        
+                        <!-- Document Upload -->
+                        <div class="document-upload">
+                            <h4>📎 Upload IMS Chapter Documents</h4>
+                            <div class="upload-area" onclick="triggerFileUpload('ims')">
+                                <input type="file" id="file-ims" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="handleFileUpload(event, 'ims')">
+                                <p>📁 Upload IT policies and system documentation</p>
+                                <button type="button" class="upload-btn">Choose Files</button>
+                            </div>
+                            <div id="uploaded-ims"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Save Status -->
+    <div class="save-status" id="saveStatus"></div>
+
+    <script>
+        let committeeData = {};
+        let uploadedDocuments = {};
+        const chapters = ['aac', 'cop', 'mom', 'pre', 'hic', 'cqi', 'rom', 'fms', 'hrm', 'ims'];
+        const totalChapters = 10;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            setupAutoSave();
+            updateProgress();
+        });
+
+        // Toggle committee section
+        function toggleCommittee(header) {
+            const content = header.nextElementSibling;
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                header.classList.remove('active');
+            } else {
+                content.classList.add('active');
+                header.classList.add('active');
+            }
+        }
+
+        // File upload functions
+        function triggerFileUpload(chapter) {
+            document.getElementById(`file-${chapter}`).click();
+        }
+
+        function handleFileUpload(event, chapter) {
+            const files = event.target.files;
+            if (!uploadedDocuments[chapter]) {
+                uploadedDocuments[chapter] = [];
+            }
+
+            Array.from(files).forEach(file => {
+                if (file.size > 10 * 1024 * 1024) {
+                    showStatus('File too large. Max 10MB allowed.', 'error');
+                    return;
+                }
+
+                const fileData = {
+                    id: Date.now() + Math.random(),
+                    name: file.name,
+                    size: file.size,
+                    uploadDate: new Date().toISOString(),
+                    chapter: chapter
+                };
+
+                uploadedDocuments[chapter].push(fileData);
+                displayFiles(chapter);
+                saveData();
+                updateProgress();
+                showStatus(`File "${file.name}" uploaded successfully`, 'success');
+            });
+        }
+
+        function displayFiles(chapter) {
+            const container = document.getElementById(`uploaded-${chapter}`);
+            const files = uploadedDocuments[chapter] || [];
+            
+            container.innerHTML = files.map(file => `
+                <div class="file-item">
+                    <div>
+                        <strong>${file.name}</strong><br>
+                        <small>${formatFileSize(file.size)} • ${formatDate(file.uploadDate)}</small>
+                    </div>
+                    <div class="file-actions">
+                        <button class="file-action-btn download-btn" onclick="downloadFile('${file.id}', '${chapter}')">📥</button>
+                        <button class="file-action-btn delete-btn" onclick="deleteFile('${file.id}', '${chapter}')">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatFileSize(bytes) {
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString();
+        }
+
+        function deleteFile(fileId, chapter) {
+            if (confirm('Delete this file?')) {
+                uploadedDocuments[chapter] = uploadedDocuments[chapter].filter(f => f.id != fileId);
+                displayFiles(chapter);
+                saveData();
+                updateProgress();
+                showStatus('File deleted', 'success');
+            }
+        }
+
+        // Auto-save functionality
+        function setupAutoSave() {
+            const forms = document.querySelectorAll('.committee-form');
+            forms.forEach(form => {
+                const inputs = form.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => {
+                        saveFormData(form);
+                        updateProgress();
+                    });
+                });
+            });
+        }
+
+        function saveFormData(form) {
+            const chapter = form.dataset.committee;
+            const formData = new FormData(form);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            committeeData[chapter] = data;
+            saveData();
+            updateStatus(form, chapter);
+        }
+
+        function updateStatus(form, chapter) {
+            const statusElement = form.closest('.committee-card').querySelector('.status');
+            const formData = new FormData(form);
+            let filled = 0, total = 0;
+            
+            for (let [key, value] of formData.entries()) {
+                total++;
+                if (value.trim()) filled++;
+            }
+            
+            const hasFiles = (uploadedDocuments[chapter] || []).length > 0;
+            const completion = Math.round((filled / total) * 100);
+            
+            if (completion === 100 && hasFiles) {
+                statusElement.textContent = 'Status: Complete ✓';
+                statusElement.style.color = '#27ae60';
+            } else if (completion > 0 || hasFiles) {
+                statusElement.textContent = `Status: ${completion}%${hasFiles ? ' + Docs' : ''}`;
+                statusElement.style.color = '#f39c12';
+            } else {
+                statusElement.textContent = 'Status: Pending';
+                statusElement.style.color = '#e74c3c';
+            }
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            const forms = document.querySelectorAll('.committee-form');
+            let completedChapters = 0;
+            let totalDocs = 0;
+
+            forms.forEach(form => {
+                const chapter = form.dataset.committee;
+                const formData = new FormData(form);
+                let hasFormData = false;
+                let hasFiles = (uploadedDocuments[chapter] || []).length > 0;
+                
+                for (let [key, value] of formData.entries()) {
+                    if (value.trim()) {
+                        hasFormData = true;
+                        break;
+                    }
+                }
+                
+                if (hasFormData || hasFiles) {
+                    completedChapters++;
+                }
+                
+                totalDocs += (uploadedDocuments[chapter] || []).length;
+            });
+            
+            const progressPercentage = Math.round((completedChapters / totalChapters) * 100);
+            
+            document.getElementById('progressFill').style.width = progressPercentage + '%';
+            document.getElementById('progressText').textContent = 
+                `${progressPercentage}% Complete (${completedChapters} of ${totalChapters} chapters)`;
+
+            // Update admin panel
+            if (document.getElementById('completedChapters')) {
+                document.getElementById('completedChapters').textContent = completedChapters;
+                document.getElementById('totalDocs').textContent = totalDocs;
+                document.getElementById('readiness').textContent = progressPercentage + '%';
+            }
+        }
+
+        // Data persistence
+        function saveData() {
+            localStorage.setItem('nabh_data', JSON.stringify(committeeData));
+            localStorage.setItem('nabh_documents', JSON.stringify(uploadedDocuments));
+        }
+
+        function loadData() {
+            const savedData = localStorage.getItem('nabh_data');
+            const savedDocs = localStorage.getItem('nabh_documents');
+            
+            if (savedData) {
+                committeeData = JSON.parse(savedData);
+                Object.keys(committeeData).forEach(chapter => {
+                    const form = document.querySelector(`[data-committee="${chapter}"]`);
+                    if (form) {
+                        Object.keys(committeeData[chapter]).forEach(field => {
+                            const input = form.querySelector(`[name="${field}"]`);
+                            if (input) input.value = committeeData[chapter][field];
+                        });
+                        updateStatus(form, chapter);
+                    }
+                });
+            }
+            
+            if (savedDocs) {
+                uploadedDocuments = JSON.parse(savedDocs);
+                chapters.forEach(chapter => displayFiles(chapter));
+            }
+        }
+
+        // Admin panel
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('active');
+            if (panel.classList.contains('active')) updateProgress();
+        }
+
+        // Export functions
+        function saveAllData() {
+            saveData();
+            showStatus('All NABH chapter data saved successfully', 'success');
+        }
+
+        function exportToWord() {
+            const data = generateExportData();
+            const blob = new Blob([data], { type: 'application/msword' });
+            downloadBlob(blob, 'NABH_Ayurveda_Documentation.doc');
+            showStatus('NABH documentation exported to Word', 'success');
+        }
+
+        function exportToPDF() {
+            window.print();
+        }
+
+        function generateReport() {
+            const report = generateComplianceReport();
+            const blob = new Blob([report], { type: 'text/html' });
+            downloadBlob(blob, 'NABH_Compliance_Report.html');
+            showStatus('NABH compliance report generated', 'success');
+        }
+
+        function generateExportData() {
+            let html = '<h1>JAGMAMCH - NABH Ayurveda Hospital Documentation</h1>';
+            html += '<p><strong>Generated:</strong> ' + new Date().toLocaleDateString() + '</p>';
+            html += '<p><strong>Standards:</strong> NABH Accreditation Standards for Ayurveda Hospitals (2nd Edition)</p>';
+            html += '<p><strong>Chapters:</strong> 10 Chapters, 98 Standards, 590 Objective Elements</p>';
+            
+            const chapterNames = {
+                'aac': 'Access, Assessment and Continuity of Care (AAC)',
+                'cop': 'Care of Patient (COP)',
+                'mom': 'Management of Medication (MOM)',
+                'pre': 'Patient Right and Education (PRE)',
+                'hic': 'Hospital Infection Control (HIC)',
+                'cqi': 'Continuous Quality Improvement (CQI)',
+                'rom': 'Responsibility of Management (ROM)',
+                'fms': 'Facility Management and Safety (FMS)',
+                'hrm': 'Human Resource Management (HRM)',
+                'ims': 'Information Management System (IMS)'
+            };
+            
+            chapters.forEach(chapter => {
+                const data = committeeData[chapter] || {};
+                const docs = uploadedDocuments[chapter] || [];
+                
+                html += `<h2>Chapter ${chapters.indexOf(chapter) + 1}: ${chapterNames[chapter]}</h2>`;
+                
+                if (Object.keys(data).length > 0) {
+                    Object.keys(data).forEach(key => {
+                        if (data[key]) html += `<p><strong>${key.replace(/_/g, ' ')}:</strong> ${data[key]}</p>`;
+                    });
+                } else {
+                    html += '<p><em>No data entered for this chapter.</em></p>';
+                }
+                
+                if (docs.length > 0) {
+                    html += '<p><strong>Documents:</strong></p><ul>';
+                    docs.forEach(doc => html += `<li>${doc.name} (${formatFileSize(doc.size)})</li>`);
+                    html += '</ul>';
+                }
+                html += '<hr>';
+            });
+            
+            return html;
+        }
+
+        function generateComplianceReport() {
+            let report = '<h1>NABH Compliance Report - JAGMAMCH</h1>';
+            report += '<p>Generated: ' + new Date().toLocaleDateString() + '</p>';
+            
+            const chapterNames = {
+                'aac': 'Access, Assessment and Continuity of Care',
+                'cop': 'Care of Patient',
+                'mom': 'Management of Medication',
+                'pre': 'Patient Right and Education',
+                'hic': 'Hospital Infection Control',
+                'cqi': 'Continuous Quality Improvement',
+                'rom': 'Responsibility of Management',
+                'fms': 'Facility Management and Safety',
+                'hrm': 'Human Resource Management',
+                'ims': 'Information Management System'
+            };
+            
+            report += '<table border="1" style="width: 100%; border-collapse: collapse;">';
+            report += '<tr style="background: #4a90e2; color: white;"><th>Chapter</th><th>Code</th><th>Completion %</th><th>Documents</th><th>Status</th></tr>';
+            
+            let totalCompliance = 0;
+            let totalDocs = 0;
+            
+            chapters.forEach(chapter => {
+                const data = committeeData[chapter] || {};
+                const docs = uploadedDocuments[chapter] || [];
+                const fields = Object.keys(data).length;
+                const filled = Object.values(data).filter(v => v.trim()).length;
+                const completion = fields > 0 ? Math.round((filled / fields) * 100) : 0;
+                
+                totalCompliance += completion;
+                totalDocs += docs.length;
+                
+                const status = completion === 100 && docs.length > 0 ? 'Ready' : 
+                              completion > 50 || docs.length > 0 ? 'In Progress' : 'Pending';
+                
+                const rowColor = status === 'Ready' ? '#d4edda' : 
+                                status === 'In Progress' ? '#fff3cd' : '#f8d7da';
+                
+                report += `<tr style="background: ${rowColor}">`;
+                report += `<td>${chapterNames[chapter]}</td>`;
+                report += `<td>${chapter.toUpperCase()}</td>`;
+                report += `<td>${completion}%</td>`;
+                report += `<td>${docs.length}</td>`;
+                report += `<td>${status}</td>`;
+                report += `</tr>`;
+            });
+            
+            report += '</table>';
+            
+            const overallCompliance = Math.round(totalCompliance / totalChapters);
+            report += `<h2>NABH Assessment Readiness: ${overallCompliance}%</h2>`;
+            report += `<p><strong>Total Documents:</strong> ${totalDocs}</p>`;
+            report += `<p><strong>Recommendation:</strong> ${overallCompliance > 80 ? 'Ready for NABH Assessment' : 'Continue preparation before assessment'}</p>`;
+            
+            return report;
+        }
+
+        function downloadBlob(blob, filename) {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
+
+        function showStatus(message, type) {
+            const status = document.getElementById('saveStatus');
+            status.textContent = message;
+            status.className = `save-status ${type} show`;
+            setTimeout(() => status.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
